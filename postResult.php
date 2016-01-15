@@ -1,5 +1,6 @@
 <?php
 header("Content-Type: text/html; charset=UTF-8");
+session_start();
 
 $name = $_POST['name'];
 $password = $_POST['pw'];
@@ -24,8 +25,10 @@ $age = 2016 - $year + 1;
 
 <?php
   if( $name == "hkb8322" && $password == "1234" ) {
- 	setCookie('isLogin', '1' );
-	setCookie('name', $name );
+	$_SESSION['isLogin'] = 1;
+	$_SESSION['name'] = $name;
+// 	setCookie('isLogin', '1' );
+//	setCookie('name', $name );
 ?>
 
 <h1>로그인 성공</h1>
@@ -39,6 +42,8 @@ $age = 2016 - $year + 1;
   else {
  	setCookie('isLogin', '0');
 	setCookie('name', '');
+	$_SESSION['isLogin'] = 0;
+	$_SESSION['name'] = '';
 ?>
 
 <h1>당신은 누구?</h1>

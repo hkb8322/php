@@ -1,5 +1,7 @@
 <?php
-  setCookie('isLogin', '0');
-  setCookiei('name', '');
+  session_start();
+  $_SESSION['isLogin'] = 0;
+  $_SESSION['name'] = '';
+  $url = "./postForm.php";
   header("Location: ". $url);
 ?>
