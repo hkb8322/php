@@ -1,9 +1,12 @@
 <?php
-header("Content-Type: text/html; charset=UTF-8");
-session_start();
+//postResult.php
+  header("Content-Type: text/html; charset=UTF-8");
+  session_start();
 
-$name = $_POST['name'];
-$password = $_POST['pw'];
+  $name = $_POST['name'];
+  $password = $_POST['pw'];
+
+  include('db.php');
 
 /*
 $name = $_POST['name'];
@@ -24,6 +27,32 @@ $age = 2016 - $year + 1;
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <?php
+  // 데이터베이스 연결
+  $link = mysql_connect($db['host'], $db['user'], $db['pw']);
+  if (!$link) {
+      die('Could not connect: ' . mysql_error());
+  }
+
+  // 사용할 데이터베이스 선택
+  mysql_select_db($db['db']);
+
+  // sql문 작성
+  $sql = "select * from members where id='".$name."' and pw=password('".$password."')";
+  echo $sql;
+  $result = mysql_query($sql);
+  $users = mysql_fetch_assoc($result);
+  echo "<pre>";
+  print_r($users);
+  echo "</pre>";
+  exit();  
+
+  // 데이터베이스 실행  
+
+
+  // 데이터베이스 연결 해제
+  mysql_close($link);
+  
+  // 아이디와 비밀번호 확인
   if( $name == "hkb8322" && $password == "1234" ) {
 	$_SESSION['isLogin'] = 1;
 	$_SESSION['name'] = $name;
@@ -52,7 +81,7 @@ $age = 2016 - $year + 1;
 로그인 페이지로 <a href="./postForm.php">돌아가기</a>
 
 <?php
-}
+  }
 ?>
 
 <!--
